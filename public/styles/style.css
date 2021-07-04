@@ -1,3 +1,14 @@
+* {
+    font-family: 'Quicksand', Quicksand, sans-serif;
+}
+
+.btn {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    gap: 4px;
+}
+
 .book-cover {
     width: 100px;
 }
