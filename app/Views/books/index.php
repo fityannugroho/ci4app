@@ -2,9 +2,21 @@
 
 <?= $this->section('content'); ?>
 <div class="container mt-3">
+    <?php if ($message = session()->getFlashdata('message')) : ?>
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            <?= $message; ?>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    <?php endif; ?>
     <div class="row">
         <div class="col">
-            <h1>My Books</h1>
+            <div class="d-flex justify-content-between align-items-center">
+                <h1>My Books</h1>
+                <a href="<?= base_url('/books/add'); ?>" class="btn btn-primary">
+                    <i class="material-icons">add</i>
+                    <span>Add Book</span>
+                </a>
+            </div>
             <table class="table table-striped">
                 <thead>
                     <tr>
