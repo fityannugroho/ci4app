@@ -22,7 +22,7 @@
                             <td><img src="/assets/images/<?= $book['cover']; ?>" width="100" alt="book_cover" class=".book-cover"></td>
                             <td><?= $book['title']; ?></td>
                             <td>
-                                <a href="" class="btn btn-success">Details</a>
+                                <a href="<?= base_url("/books/$book[slug]"); ?>" class="btn btn-success">Details</a>
                             </td>
                         </tr>
                         <?php $i++; ?>

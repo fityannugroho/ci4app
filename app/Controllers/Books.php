@@ -15,13 +15,25 @@ class Books extends BaseController
 
     public function index()
     {
-        $books = $this->bookModel->findAll();
+        $books = $this->bookModel->getBook();
 
         $data = [
-            'title' => 'Daftar Buku',
+            'title' => 'My Books',
             'books' => $books
         ];
 
         return view('books/index', $data);
+    }
+
+    public function details($slug)
+    {
+        $book = $this->bookModel->getBook($slug);
+
+        $data = [
+            'title' => $book['title'],
+            'book' => $book
+        ];
+
+        return view('books/details', $data);
     }
 }
