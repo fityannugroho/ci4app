@@ -4,7 +4,7 @@
 
 <div class="container mt-3">
     <div class="row">
-        <div class="column">
+        <div class="col">
             <h1>Contact Us</h1>
             <?php foreach ($addresses as $address) : ?>
                 <div class="card" style="width: 18rem;">
