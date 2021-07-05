@@ -173,8 +173,10 @@ class Books extends BaseController
             // set updated book cover name with the new one
             $updatedCoverName = $newCoverName;
 
-            // delete the old book cover file
-            unlink('db/' . $oldCoverName);
+            // delete the old book cover file if not use default cover file
+            if ($oldCoverName !== 'default-cover.jpg') {
+                unlink('db/' . $oldCoverName);
+            }
         }
 
         // make the new slug of the book title
