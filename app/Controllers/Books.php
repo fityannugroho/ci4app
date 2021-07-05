@@ -46,7 +46,8 @@ class Books extends BaseController
     public function add()
     {
         $data = [
-            'title' => 'Add Book'
+            'title' => 'Add Book',
+            'validation' => \Config\Services::validation()
         ];
 
         return view('books/add', $data);
@@ -54,10 +55,48 @@ class Books extends BaseController
 
     public function insert()
     {
-        // $data = $this->request->getVar();
-        // dd($data);
+        // validation rules
+        $rules = [
+            'title' => [
+                'rules' => 'required|max_length[255]|is_unique[book.title]',
+                'errors' => [
+                    'required' => 'The {field} field is required.',
+                    'is_unique' => 'This value is already exists. Please use another name.',
+                    'max_length' => 'The value for {field} must be less than {param} characters.'
+                ]
+            ],
+            'writer' => [
+                'rules' => 'required|max_length[255]',
+                'errors' => [
+                    'max_length' => 'The value for {field} must be less than {param} characters.'
+                ]
+            ],
+            'publisher' => [
+                'rules' => 'required|max_length[255]',
+                'errors' => [
+                    'max_length' => 'The value for {field} must be less than {param} characters.'
+                ]
+            ],
+            'cover' => [
+                'rules' => 'required|max_length[255]',
+                'errors' => [
+                    'max_length' => 'The value for {field} must be less than {param} characters.'
+                ]
+            ]
+        ];
+
+        // form validation
+        if (!$this->validate($rules)) {
+            $validation = \Config\Services::validation();
+
+            // return to the form page with the form data and validation results
+            return redirect()->to('/books/add')->withInput()->with('validation', $validation);
+        }
+
+        // make the slug of the book title
         $slug = url_title($this->request->getVar('title'), '-', true);
 
+        // insert data
         $this->bookModel->save([
             'title' => $this->request->getVar('title'),
             'slug' => $slug,
@@ -66,6 +105,7 @@ class Books extends BaseController
             'cover' => $this->request->getVar('cover')
         ]);
 
+        // set success alert with session
         session()->setFlashdata('message', 'Book successfully added');
 
         return redirect()->to('/books');

@@ -16,25 +16,29 @@
                 <div class="row mb-3">
                     <label for="bookTitle" class="col-sm-2 col-form-label">Title</label>
                     <div class="col-sm-10">
-                        <input type="text" class="form-control" id="bookTitle" name="title" required autofocus>
+                        <input type="text" class="form-control <?= ($validation->hasError('title')) ? 'is-invalid' : ''; ?>" id="bookTitle" name="title" autofocus value="<?= old('title'); ?>">
+                        <div class="invalid-feedback"><?= $validation->getError('title'); ?></div>
                     </div>
                 </div>
                 <div class="row mb-3">
                     <label for="bookWriter" class="col-sm-2 col-form-label">Writer</label>
                     <div class="col-sm-10">
-                        <input type="text" class="form-control" id="bookWriter" name="writer" required>
+                        <input type="text" class="form-control <?= ($validation->hasError('writer')) ? 'is-invalid' : ''; ?>" id="bookWriter" name="writer" value="<?= old('writer'); ?>">
+                        <div class="invalid-feedback"><?= $validation->getError('writer'); ?></div>
                     </div>
                 </div>
                 <div class="row mb-3">
                     <label for="bookPublisher" class="col-sm-2 col-form-label">Publisher</label>
                     <div class="col-sm-10">
-                        <input type="text" class="form-control" id="bookPublisher" name="publisher" required>
+                        <input type="text" class="form-control <?= ($validation->hasError('publisher')) ? 'is-invalid' : ''; ?>" id="bookPublisher" name="publisher" value="<?= old('publisher'); ?>">
+                        <div class="invalid-feedback"><?= $validation->getError('publisher'); ?></div>
                     </div>
                 </div>
                 <div class="row mb-3">
                     <label for="bookCover" class="col-sm-2 col-form-label">Cover</label>
                     <div class="col-sm-10">
-                        <input type="text" class="form-control" id="bookCover" name="cover" required>
+                        <input type="text" class="form-control <?= ($validation->hasError('cover')) ? 'is-invalid' : ''; ?>" id="bookCover" name="cover" value="<?= old('cover'); ?>">
+                        <div class="invalid-feedback"><?= $validation->getError('cover'); ?></div>
                     </div>
                 </div>
                 <div class="row mb-2">
