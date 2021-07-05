@@ -52,7 +52,7 @@ $formValues = [
                         <div class="invalid-feedback"><?= $validation->getError('cover'); ?></div>
                     </div>
                     <div class="col-sm-2">
-                        <img src="/assets/images/<?= $book['cover']; ?>" id="bookCoverPreview" class="img-thumbnail">
+                        <img src="/db/<?= $book['cover']; ?>" id="bookCoverPreview" class="img-thumbnail">
                     </div>
                 </div>
                 <div class="row mb-2">

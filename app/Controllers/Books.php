@@ -84,7 +84,7 @@ class Books extends BaseController
             $newCoverName = $cover->getRandomName();
 
             // move $cover to server-storage folder with new name
-            $cover->move('assets/images', $newCoverName);
+            $cover->move('db/', $newCoverName);
         }
 
         // make the slug of the book title
@@ -114,7 +114,7 @@ class Books extends BaseController
 
         // delete book cover file if not use default cover file
         if ($coverName !== 'default-cover.jpg') {
-            unlink('assets/images/' . $coverName);
+            unlink('db/' . $coverName);
         }
 
         // delete book record in table
@@ -168,13 +168,13 @@ class Books extends BaseController
             $newCoverName = $cover->getRandomName();
 
             // move $cover to server-storage folder with new name
-            $cover->move('assets/images/', $newCoverName);
+            $cover->move('db/', $newCoverName);
 
             // set updated book cover name with the new one
             $updatedCoverName = $newCoverName;
 
             // delete the old book cover file
-            unlink('assets/images/' . $oldCoverName);
+            unlink('db/' . $oldCoverName);
         }
 
         // make the new slug of the book title

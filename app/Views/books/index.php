@@ -26,7 +26,7 @@
                     <?php foreach ($books as $book) : ?>
                         <tr>
                             <th scope="row"><?= $i; ?></th>
-                            <td><img src="/assets/images/<?= $book['cover']; ?>" width="100" alt="book_cover" class=".book-cover"></td>
+                            <td><img src="/db/<?= $book['cover']; ?>" width="100" alt="book_cover" class=".book-cover"></td>
                             <td><?= $book['title']; ?></td>
                             <td>
                                 <a href="<?= base_url("/books/$book[slug]"); ?>" class="btn btn-success">

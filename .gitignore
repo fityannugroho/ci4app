@@ -125,3 +125,8 @@ nb-configuration.xml
 /results/
 /phpunit*.xml
 /.phpunit.*.cache
+
+#-------------------------
+# Database
+#-------------------------
+public/db/*

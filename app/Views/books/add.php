@@ -41,7 +41,7 @@
                         <div class="invalid-feedback"><?= $validation->getError('cover'); ?></div>
                     </div>
                     <div class="col-sm-2">
-                        <img src="/assets/images/default-cover.jpg" id="bookCoverPreview" class="img-thumbnail">
+                        <img src="/db/default-cover.jpg" id="bookCoverPreview" class="img-thumbnail">
                     </div>
                 </div>
                 <div class="row mb-2">
