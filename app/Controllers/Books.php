@@ -3,7 +3,6 @@
 namespace App\Controllers;
 
 use \App\Models\BookModel;
-use DateTimeZone;
 
 class Books extends BaseController
 {
@@ -109,6 +108,19 @@ class Books extends BaseController
 
     public function delete($id)
     {
+        // looking for a book to delete by id
+        $book = $this->bookModel->getBook($id);
+        $coverName = $book['cover'];
+
+        // delete book cover file if not use default cover file
+        if ($coverName !== 'default-cover.jpg') {
+            $unlinkStatus = unlink('assets/images/' . $coverName);
+            if (!$unlinkStatus) {
+                throw new \CodeIgniter\Exceptions\AlertError('Book cover file failed to delete. This file still exist in server-database');
+            }
+        }
+
+        // delete book record in table
         $this->bookModel->delete($id);
 
         // set success alert with session
