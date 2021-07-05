@@ -32,8 +32,43 @@
                             <!-- <p class="card-text"></p> -->
                             <p class="card-text"><small class="text-muted">Last updated on <?= $book['updated_at']; ?></small></p>
                             <div class="d-flex gap-2 justify-content-end">
-                                <a href="" class="btn btn-secondary">Edit</a>
-                                <a href="" class="btn btn-danger">Delete</a>
+                                <a href="" class="btn btn-warning">
+                                    <i class="material-icons">edit</i>
+                                    <span>Edit</span>
+                                </a>
+                                <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#confirmBookDeletion">
+                                    <i class="material-icons">delete</i>
+                                    <span>Delete</span>
+                                </button>
+
+                                <!-- Confirm Book Deletion Modal -->
+                                <div class="modal fade" id="confirmBookDeletion" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="staticBackdropLabel">Delete This Book?</h5>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                            </div>
+                                            <div class="modal-body">
+                                                Are you sure to delete this book?
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+
+                                                <form action="<?= base_url("/books/$book[id]"); ?>" method="post">
+                                                    <?= csrf_field(); ?>
+
+                                                    <!-- Using HTTP Method Spoofing -->
+                                                    <input type="hidden" name="_method" value="DELETE">
+
+                                                    <button type="submit" class="btn btn-danger">
+                                                        <span>Yes, Delete it</span>
+                                                    </button>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>

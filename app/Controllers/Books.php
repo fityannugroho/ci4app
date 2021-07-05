@@ -9,10 +9,12 @@ class Books extends BaseController
 {
     protected $bookModel;
 
+
     public function __construct()
     {
         $this->bookModel = new BookModel();
     }
+
 
     public function index()
     {
@@ -26,22 +28,24 @@ class Books extends BaseController
         return view('books/index', $data);
     }
 
+
     public function details($slug)
     {
         $book = $this->bookModel->getBook($slug);
+
+        // checking the existence of the book
+        if (empty($book)) {
+            throw new \CodeIgniter\Exceptions\PageNotFoundException('The book is not found');
+        }
 
         $data = [
             'title' => $book['title'],
             'book' => $book
         ];
 
-        // checking the existence of the book
-        if (empty($data['book'])) {
-            throw new \CodeIgniter\Exceptions\PageNotFoundException('The book is not found');
-        }
-
         return view('books/details', $data);
     }
+
 
     public function add()
     {
@@ -52,6 +56,7 @@ class Books extends BaseController
 
         return view('books/add', $data);
     }
+
 
     public function insert()
     {
@@ -106,7 +111,18 @@ class Books extends BaseController
         ]);
 
         // set success alert with session
-        session()->setFlashdata('message', 'Book successfully added');
+        session()->setFlashdata('message', 'Book successfully added.');
+
+        return redirect()->to('/books');
+    }
+
+
+    public function delete($id)
+    {
+        $this->bookModel->delete($id);
+
+        // set success alert with session
+        session()->setFlashdata('message', 'Book successfully deleted.');
 
         return redirect()->to('/books');
     }

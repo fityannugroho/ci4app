@@ -31,11 +31,18 @@ $routes->setAutoRoute(true);
 
 // We get a performance increase by specifying the default
 // route since we don't have to scan directories.
+
+// Main pages
 $routes->get('/', 'Pages::index');
 
+// To add book form page
 $routes->get('/books/add', 'Books::add');
 
-$routes->get('/books/(:segment)', 'Books::details/$1');
+// To delete a book
+$routes->delete('/books/(:num)', 'Books::delete/$1');
+
+// To book details page
+$routes->get('/books/(:any)', 'Books::details/$1');
 
 /**
  * --------------------------------------------------------------------
