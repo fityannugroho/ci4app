@@ -8,10 +8,10 @@
                 <h1 class="">Add Book</h1>
                 <a href="<?= base_url('/books'); ?>" class="btn btn-outline-secondary btn-sm">
                     <i class="material-icons">arrow_back</i>
-                    <span>Back to list</span>
+                    <span>Back to List</span>
                 </a>
             </div>
-            <form action="<?= base_url('/books/insert'); ?>" method="POST">
+            <form action="<?= base_url('/books/insert'); ?>" method="POST" enctype="multipart/form-data">
                 <?= csrf_field(); ?>
                 <div class="row mb-3">
                     <label for="bookTitle" class="col-sm-2 col-form-label">Title</label>
@@ -37,7 +37,7 @@
                 <div class="row mb-3">
                     <label for="bookCover" class="col-sm-2 col-form-label">Cover</label>
                     <div class="col-sm-10">
-                        <input type="text" class="form-control <?= ($validation->hasError('cover')) ? 'is-invalid' : ''; ?>" id="bookCover" name="cover" value="<?= old('cover'); ?>">
+                        <input type="file" id="bookCover" name="cover" class="form-control <?= ($validation->hasError('cover')) ? 'is-invalid' : ''; ?>" value="<?= old('cover'); ?>">
                         <div class="invalid-feedback"><?= $validation->getError('cover'); ?></div>
                     </div>
                 </div>

@@ -34,10 +34,11 @@ class BookModel extends Model
             ]
         ],
         'cover' => [
-            'rules' => 'required|max_length[255]',
+            'rules' => 'max_size[cover,1024]|is_image[cover]|mime_in[cover,image/jpg,image/jpeg,image/png]',
             'errors' => [
-                'required' => 'The {field} field is required.',
-                'max_length' => 'The value for {field} must be less than {param} characters.'
+                'max_size' => 'The size of file image is too large. Max: 1MB.',
+                'is_image' => 'The file you selected is not an image. Please choose image only.',
+                'mime_in' => 'The file you selected is not an image. Please choose image only.'
             ]
         ]
     ];

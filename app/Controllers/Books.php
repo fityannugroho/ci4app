@@ -65,10 +65,27 @@ class Books extends BaseController
 
         // form validation
         if (!$this->validate($insertRules)) {
-            $validation = \Config\Services::validation();
+            // $validation = \Config\Services::validation();
+            // return redirect()->to('/books/add')->withInput()->with('validation', $validation);
 
             // return to the form page with the form data and validation results
-            return redirect()->to('/books/add')->withInput()->with('validation', $validation);
+            return redirect()->to('/books/add')->withInput();
+        }
+
+        // take the book cover image file
+        $cover = $this->request->getFile('cover');
+
+        // check if there is no file uploaded
+        $noFileUploadedErrCode = 4;
+        if ($cover->getError() === $noFileUploadedErrCode) {
+            // set the cover image to default cover image
+            $newCoverName = 'default-cover.jpg';
+        } else {
+            // generate a random name for $cover file
+            $newCoverName = $cover->getRandomName();
+
+            // move $cover to server-storage folder with new name
+            $cover->move('assets/images', $newCoverName);
         }
 
         // make the slug of the book title
@@ -80,7 +97,7 @@ class Books extends BaseController
             'slug' => $slug,
             'writer' => $this->request->getVar('writer'),
             'publisher' => $this->request->getVar('publisher'),
-            'cover' => $this->request->getVar('cover')
+            'cover' => $newCoverName
         ]);
 
         // set success alert with session
@@ -121,11 +138,9 @@ class Books extends BaseController
 
         // form validation
         if (!$this->validate($updateRules)) {
-            $validation = \Config\Services::validation();
-
             // return to the form page with the form data and validation results
             $oldBook = $this->bookModel->getBook($id);
-            return redirect()->to("/books/edit/$oldBook[slug]")->withInput()->with('validation', $validation);
+            return redirect()->to("/books/edit/$oldBook[slug]")->withInput();
         }
 
         // make the new slug of the book title
