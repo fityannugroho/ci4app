@@ -21,8 +21,9 @@ $formValues = [
                     <span>Back to Details</span>
                 </a>
             </div>
-            <form action="<?= base_url("/books/update/$book[id]"); ?>" method="POST">
+            <form action="<?= base_url("/books/update/$book[id]"); ?>" method="POST" enctype="multipart/form-data">
                 <?= csrf_field(); ?>
+                <input type="hidden" name="old_cover" value="<?= $book['cover']; ?>">
                 <div class="row mb-3">
                     <label for="bookTitle" class="col-sm-2 col-form-label">Title</label>
                     <div class="col-sm-10">
@@ -46,9 +47,12 @@ $formValues = [
                 </div>
                 <div class="row mb-3">
                     <label for="bookCover" class="col-sm-2 col-form-label">Cover</label>
-                    <div class="col-sm-10">
-                        <input type="text" class="form-control <?= ($validation->hasError('cover')) ? 'is-invalid' : ''; ?>" id="bookCover" name="cover" value="<?= $formValues['cover']; ?>">
+                    <div class="col-sm-8">
+                        <input type="file" id="bookCover" name="cover" class="form-control <?= ($validation->hasError('cover')) ? 'is-invalid' : ''; ?>">
                         <div class="invalid-feedback"><?= $validation->getError('cover'); ?></div>
+                    </div>
+                    <div class="col-sm-2">
+                        <img src="/assets/images/<?= $book['cover']; ?>" id="bookCoverPreview" class="img-thumbnail">
                     </div>
                 </div>
                 <div class="row mb-2">

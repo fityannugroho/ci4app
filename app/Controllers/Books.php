@@ -114,10 +114,7 @@ class Books extends BaseController
 
         // delete book cover file if not use default cover file
         if ($coverName !== 'default-cover.jpg') {
-            $unlinkStatus = unlink('assets/images/' . $coverName);
-            if (!$unlinkStatus) {
-                throw new \CodeIgniter\Exceptions\AlertError('Book cover file failed to delete. This file still exist in server-database');
-            }
+            unlink('assets/images/' . $coverName);
         }
 
         // delete book record in table
@@ -155,6 +152,31 @@ class Books extends BaseController
             return redirect()->to("/books/edit/$oldBook[slug]")->withInput();
         }
 
+        // take the updated book cover image file
+        $cover = $this->request->getFile('cover');
+
+        // get the old book cover name
+        $oldCoverName = $this->request->getVar('old_cover');
+
+        // set updated book cover name
+        $updatedCoverName = $oldCoverName;
+
+        // if cover is changed with the new one
+        $noFileUploadedErrCode = 4;
+        if ($cover->getError() !== $noFileUploadedErrCode) {
+            // generate a random name for $cover file
+            $newCoverName = $cover->getRandomName();
+
+            // move $cover to server-storage folder with new name
+            $cover->move('assets/images/', $newCoverName);
+
+            // set updated book cover name with the new one
+            $updatedCoverName = $newCoverName;
+
+            // delete the old book cover file
+            unlink('assets/images/' . $oldCoverName);
+        }
+
         // make the new slug of the book title
         $slug = url_title($this->request->getVar('title'), '-', true);
 
@@ -165,7 +187,7 @@ class Books extends BaseController
             'slug' => $slug,
             'writer' => $this->request->getVar('writer'),
             'publisher' => $this->request->getVar('publisher'),
-            'cover' => $this->request->getVar('cover')
+            'cover' => $updatedCoverName
         ]);
 
         // set success alert with session
