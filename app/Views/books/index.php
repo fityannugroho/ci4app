@@ -2,12 +2,7 @@
 
 <?= $this->section('content'); ?>
 <div class="container mt-3">
-    <?php if ($message = session()->getFlashdata('message')) : ?>
-        <div class="alert alert-success alert-dismissible fade show" role="alert">
-            <?= $message; ?>
-            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-        </div>
-    <?php endif; ?>
+    <?= $this->include('layout/alert'); ?>
     <div class="row">
         <div class="col">
             <div class="d-flex justify-content-between align-items-center">

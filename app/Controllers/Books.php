@@ -31,7 +31,7 @@ class Books extends BaseController
 
     public function details($slug)
     {
-        $book = $this->bookModel->getBook($slug);
+        $book = $this->bookModel->getBook($slug, 'slug');
 
         // checking the existence of the book
         if (empty($book)) {
@@ -60,38 +60,11 @@ class Books extends BaseController
 
     public function insert()
     {
-        // validation rules
-        $rules = [
-            'title' => [
-                'rules' => 'required|max_length[255]|is_unique[book.title]',
-                'errors' => [
-                    'required' => 'The {field} field is required.',
-                    'is_unique' => 'This value is already exists. Please use another name.',
-                    'max_length' => 'The value for {field} must be less than {param} characters.'
-                ]
-            ],
-            'writer' => [
-                'rules' => 'required|max_length[255]',
-                'errors' => [
-                    'max_length' => 'The value for {field} must be less than {param} characters.'
-                ]
-            ],
-            'publisher' => [
-                'rules' => 'required|max_length[255]',
-                'errors' => [
-                    'max_length' => 'The value for {field} must be less than {param} characters.'
-                ]
-            ],
-            'cover' => [
-                'rules' => 'required|max_length[255]',
-                'errors' => [
-                    'max_length' => 'The value for {field} must be less than {param} characters.'
-                ]
-            ]
-        ];
+        // validation rules to insert a new book
+        $insertRules = $this->bookModel->getDefaultRules();
 
         // form validation
-        if (!$this->validate($rules)) {
+        if (!$this->validate($insertRules)) {
             $validation = \Config\Services::validation();
 
             // return to the form page with the form data and validation results
@@ -125,5 +98,52 @@ class Books extends BaseController
         session()->setFlashdata('message', 'Book successfully deleted.');
 
         return redirect()->to('/books');
+    }
+
+
+    public function edit($slug)
+    {
+        $data = [
+            'title' => 'Edit Book',
+            'validation' => \Config\Services::validation(),
+            'book' => $this->bookModel->getBook($slug, 'slug')
+        ];
+
+        return view('books/edit', $data);
+    }
+
+
+    public function update($id)
+    {
+        // validation rules to update a book
+        $updateRules = $this->bookModel->getDefaultRules();
+        $updateRules['title']['rules'] = "required|max_length[255]|is_unique[book.title,id,$id]";
+
+        // form validation
+        if (!$this->validate($updateRules)) {
+            $validation = \Config\Services::validation();
+
+            // return to the form page with the form data and validation results
+            $oldBook = $this->bookModel->getBook($id);
+            return redirect()->to("/books/edit/$oldBook[slug]")->withInput()->with('validation', $validation);
+        }
+
+        // make the new slug of the book title
+        $slug = url_title($this->request->getVar('title'), '-', true);
+
+        // updating the book
+        $this->bookModel->save([
+            'id' => $id,
+            'title' => $this->request->getVar('title'),
+            'slug' => $slug,
+            'writer' => $this->request->getVar('writer'),
+            'publisher' => $this->request->getVar('publisher'),
+            'cover' => $this->request->getVar('cover')
+        ]);
+
+        // set success alert with session
+        session()->setFlashdata('message', 'Book successfully edited.');
+
+        return redirect()->to("/books/$slug");
     }
 }

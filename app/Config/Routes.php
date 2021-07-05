@@ -38,6 +38,9 @@ $routes->get('/', 'Pages::index');
 // To add book form page
 $routes->get('/books/add', 'Books::add');
 
+// To edit a book
+$routes->get('/books/edit/(:any)', 'Books::edit/$1');
+
 // To delete a book
 $routes->delete('/books/(:num)', 'Books::delete/$1');
 

@@ -2,13 +2,14 @@
 
 <?= $this->section('content'); ?>
 <div class="container mt-3">
+    <?= $this->include('layout/alert'); ?>
     <div class="row">
         <div class="col">
             <div class="mb-4">
                 <h1>Book Details</h1>
                 <a href="<?= base_url('/books'); ?>" class="btn btn-outline-secondary btn-sm">
                     <i class="material-icons">arrow_back</i>
-                    <span>Back to list</span>
+                    <span>Back to List</span>
                 </a>
             </div>
             <div class="card mb-3" style="max-width: 540px;">
@@ -32,7 +33,7 @@
                             <!-- <p class="card-text"></p> -->
                             <p class="card-text"><small class="text-muted">Last updated on <?= $book['updated_at']; ?></small></p>
                             <div class="d-flex gap-2 justify-content-end">
-                                <a href="" class="btn btn-warning">
+                                <a href="<?= base_url("/books/edit/$book[slug]"); ?>" class="btn btn-warning">
                                     <i class="material-icons">edit</i>
                                     <span>Edit</span>
                                 </a>
