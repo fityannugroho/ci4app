@@ -12,6 +12,23 @@
                     <span>Add Book</span>
                 </a>
             </div>
+        </div>
+    </div>
+    <div class="row mb-3">
+        <div class="col">
+            <form action="" method="get">
+                <div class="input-group mb-3">
+                    <button class="btn btn-outline-primary" type="submit">
+                        <i class="material-icons">search</i>
+                    </button>
+                    <input type="text" class="form-control" name="keyword" placeholder="Search book by title, writer, or publisher" value="<?= $keyword; ?>">
+                    <a href="<?= base_url('/books'); ?>" class="btn btn-outline-secondary">Reset</a>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
             <div class="mb-3">
                 <?php if (sizeof($books) > 0) : ?>
                     <table class="table table-striped">

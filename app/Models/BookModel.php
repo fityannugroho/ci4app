@@ -60,4 +60,11 @@ class BookModel extends Model
     {
         return $this->defaultRules;
     }
+
+
+    public function search($keyword)
+    {
+        $builder = $this->table('book');
+        return $builder->like('title', $keyword)->orLike('writer', $keyword)->orLike('publisher', $keyword);
+    }
 }

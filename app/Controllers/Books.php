@@ -17,18 +17,28 @@ class Books extends BaseController
 
     public function index()
     {
-        $currentPage = (empty($this->request->getVar('page_book'))) ? 1 : $this->request->getVar('page_book');
+        $books = null;
+        $keyword = $this->request->getVar('keyword');
+
+        // pagination properties
+        $currentPage = $this->request->getVar('page_book');
+        $currentPage = ((int)$currentPage > 1) ? $currentPage : 1;
         $rowEachPage = 4;
 
-        // $books = $this->bookModel->getBook();
-        $books = $this->bookModel->paginate($rowEachPage, 'book');
+        // execute searching query if keyword is exist
+        if (!empty($keyword)) {
+            $books = $this->bookModel->search($keyword);
+        } else {
+            $books = $this->bookModel;
+        }
 
         $data = [
             'title' => 'My Books',
-            'books' => $books,
+            'books' => $books->paginate($rowEachPage, 'book'),
             'pager' => $this->bookModel->pager,
             'currentPage' => $currentPage,
-            'rowEachPage' => $rowEachPage
+            'rowEachPage' => $rowEachPage,
+            'keyword' => $keyword
         ];
 
         return view('books/index', $data);
