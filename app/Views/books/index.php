@@ -24,7 +24,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <?php $i = 1; ?>
+                            <?php $i = 1 + ($rowEachPage * ($currentPage - 1)) ?>
                             <?php foreach ($books as $book) : ?>
                                 <tr>
                                     <th scope="row"><?= $i; ?></th>
@@ -41,6 +41,7 @@
                             <?php endforeach; ?>
                         </tbody>
                     </table>
+                    <?= $pager->links('book', 'books_pagination'); ?>
                 <?php else : ?>
                     <p class="p-3 border bg-light">There are no book.</p>
                 <?php endif; ?>

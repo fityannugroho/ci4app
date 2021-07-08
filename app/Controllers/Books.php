@@ -17,11 +17,18 @@ class Books extends BaseController
 
     public function index()
     {
-        $books = $this->bookModel->getBook();
+        $currentPage = (empty($this->request->getVar('page_book'))) ? 1 : $this->request->getVar('page_book');
+        $rowEachPage = 4;
+
+        // $books = $this->bookModel->getBook();
+        $books = $this->bookModel->paginate($rowEachPage, 'book');
 
         $data = [
             'title' => 'My Books',
-            'books' => $books
+            'books' => $books,
+            'pager' => $this->bookModel->pager,
+            'currentPage' => $currentPage,
+            'rowEachPage' => $rowEachPage
         ];
 
         return view('books/index', $data);
