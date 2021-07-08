@@ -6,13 +6,16 @@
     display: inline-flex;
     justify-content: center;
     align-items: center;
-    gap: 4px;
+    gap: 0.25rem;
 }
 
 /* --- in books.index page --- */
+.responsive-table {
+    overflow-x: auto;
+}
 
 .table .book-cover {
-    width: 100px;
+    width: 7.5rem;
 }
 
 .table > tbody > tr > * {
@@ -24,4 +27,10 @@
 .card .book-cover {
     display: inline-flex;
     align-items: center;
+}
+
+@media screen and (max-width: 480px) {
+    .container {
+        padding: 0.5rem 1.5rem;
+    }
 }

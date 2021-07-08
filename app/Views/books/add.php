@@ -38,7 +38,11 @@
                     <label for="bookCover" class="col-sm-2 col-form-label">Cover</label>
                     <div class="col-sm-8">
                         <input type="file" id="bookCover" name="cover" class="form-control <?= ($validation->hasError('cover')) ? 'is-invalid' : ''; ?>" value="<?= old('cover'); ?>">
-                        <div class="invalid-feedback"><?= $validation->getError('cover'); ?></div>
+                        <?php if ($validation->hasError('cover')) : ?>
+                            <div class="invalid-feedback"><?= $validation->getError('cover'); ?></div>
+                        <?php else : ?>
+                            <div class="form-text">Maximum file size up to 1 MB with .jpg, .jpeg or .png extension.</div>
+                        <?php endif; ?>
                     </div>
                     <div class="col-sm-2">
                         <img src="/db/default-cover.jpg" id="bookCoverPreview" class="img-thumbnail">

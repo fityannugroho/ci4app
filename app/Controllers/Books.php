@@ -109,11 +109,11 @@ class Books extends BaseController
 
         // insert data
         $this->bookModel->save([
-            'title' => $this->request->getVar('title'),
-            'slug' => $slug,
-            'writer' => $this->request->getVar('writer'),
-            'publisher' => $this->request->getVar('publisher'),
-            'cover' => $newCoverName
+            'title' => htmlspecialchars($this->request->getVar('title')),
+            'slug' => htmlspecialchars($slug),
+            'writer' => htmlspecialchars($this->request->getVar('writer')),
+            'publisher' => htmlspecialchars($this->request->getVar('publisher')),
+            'cover' => htmlspecialchars($newCoverName)
         ]);
 
         // set success alert with session
@@ -202,11 +202,11 @@ class Books extends BaseController
         // updating the book
         $this->bookModel->save([
             'id' => $id,
-            'title' => $this->request->getVar('title'),
-            'slug' => $slug,
-            'writer' => $this->request->getVar('writer'),
-            'publisher' => $this->request->getVar('publisher'),
-            'cover' => $updatedCoverName
+            'title' => htmlspecialchars($this->request->getVar('title')),
+            'slug' => htmlspecialchars($slug),
+            'writer' => htmlspecialchars($this->request->getVar('writer')),
+            'publisher' => htmlspecialchars($this->request->getVar('publisher')),
+            'cover' => htmlspecialchars($updatedCoverName)
         ]);
 
         // set success alert with session
